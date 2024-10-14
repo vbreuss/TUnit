@@ -13,6 +13,18 @@ public class ThrowsException<TActual, TException>(
     [CallerMemberName] string callerMemberName = "")
     where TException : Exception
 {
+
+    public IValueSource<TException?> Which
+    {
+        get
+        {
+            return new ValueSource<TException?>(
+                new MappedInvokableAssertionBuilder<TActual, TException?>(
+                    delegateAssertionBuilder.AssertionBuilder,
+                    (_, e) => e as TException,
+                    null));
+        }
+    }
     public ThrowsException<TActual, TException> WithMessageMatching(StringMatcher match, [CallerArgumentExpression("match")] string doNotPopulateThisValue = "")
     {
         source.RegisterAssertion(new ThrowsWithMessageMatchingAssertCondition<TActual, TException>(match, selector)
@@ -25,6 +37,19 @@ public class ThrowsException<TActual, TException>(
         source.RegisterAssertion(new ThrowsWithMessageAssertCondition<TActual, TException>(expected, StringComparison.Ordinal, selector)
             , [doNotPopulateThisValue]);
         return this;
+    }
+
+
+    public ThrowsException<TActual, Exception> WithInnerException2(
+        Func<IValueSource<Exception?>, InvokableAssertionBuilder<Exception?>> assert,
+        [CallerArgumentExpression("assert")] string assertionBuilderExpression = "")
+    {
+        source.RegisterAssertion(new SatisfiesAssertCondition<TActual, Exception?>(
+            (_, e) => Task.FromResult(e?.InnerException),
+            assert,
+            nameof(WithInnerException2),
+            ""), []);
+        return new(delegateAssertionBuilder, source, e => selector(e)?.InnerException);
     }
 
     public ThrowsException<TActual, Exception> WithInnerException()

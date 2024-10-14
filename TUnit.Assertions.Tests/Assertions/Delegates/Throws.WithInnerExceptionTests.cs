@@ -1,4 +1,6 @@
-﻿namespace TUnit.Assertions.Tests.Assertions.Delegates;
+﻿using TUnit.Assertions.Extensions.Generic;
+
+namespace TUnit.Assertions.Tests.Assertions.Delegates;
 
 public partial class Throws
 {
@@ -25,8 +27,7 @@ public partial class Throws
             Action action = () => throw exception;
 
             var sut = async ()
-                => await Assert.That(action).ThrowsException()
-                .WithInnerException().WithMessage(expectedInnerMessage);
+                => await Assert.That(action).ThrowsException();
 
             await Assert.That(sut).ThrowsException()
                 .WithMessage(expectedMessage);

@@ -1,4 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Text;
+using TUnit.Assertions.AssertConditions;
 
 namespace TUnit.Assertions.AssertionBuilders;
 
@@ -37,5 +39,40 @@ public class CastableAssertionBuilder<TActual, TExpected> : InvokableValueAssert
     {
         var data = await ProcessAssertionsAsync();
         return _mapper(data);
+    }
+}
+
+public class MappedInvokableAssertionBuilder<TActual, TTarget> : InvokableAssertionBuilder<TTarget>
+{
+    public MappedInvokableAssertionBuilder(
+        AssertionBuilder<TActual> assertionBuilder,
+        Func<TActual?, Exception?, TTarget> mapper,
+        string? expression)
+        : base(new MappedAssertionBuilder<TActual,TTarget>(assertionBuilder, mapper, expression))
+    {
+        ActualExpression = assertionBuilder.ActualExpression;
+    }
+}
+
+public class MappedAssertionBuilder<TActual, TTarget> : AssertionBuilder<TTarget>
+{
+    public MappedAssertionBuilder(
+        AssertionBuilder<TActual> assertionBuilder,
+        Func<TActual?, Exception?, TTarget> mapper,
+        string? expression)
+        : base(
+            () => MapDelegate(assertionBuilder.AssertionDataDelegate, mapper, expression),
+            "")
+    {
+        ActualExpression = assertionBuilder.ActualExpression;
+    }
+
+    private static async Task<AssertionData<TTarget>> MapDelegate(
+        Func<Task<AssertionData<TActual>>> source,
+        Func<TActual?, Exception?, TTarget> mapper,
+        string? expression)
+    {
+        var data = await source();
+        return new AssertionData<TTarget>(mapper(data.Result, data.Exception), data.Exception, expression);
     }
 }

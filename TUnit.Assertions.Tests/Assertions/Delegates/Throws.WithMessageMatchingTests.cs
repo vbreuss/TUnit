@@ -20,7 +20,7 @@ public partial class Throws
             Action action = () => throw exception;
 
             var sut = async ()
-                => await Assert.That(action).Throws<CustomException>().WithMessageMatching(pattern);
+                => await Assert.That(action).Throws<CustomException>().Which.HasMessage(pattern);
 
             if (expectMatch)
             {
