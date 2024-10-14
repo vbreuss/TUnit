@@ -39,19 +39,6 @@ public class ThrowsException<TActual, TException>(
         return this;
     }
 
-
-    public ThrowsException<TActual, Exception> WithInnerException2(
-        Func<IValueSource<Exception?>, InvokableAssertionBuilder<Exception?>> assert,
-        [CallerArgumentExpression("assert")] string assertionBuilderExpression = "")
-    {
-        source.RegisterAssertion(new SatisfiesAssertCondition<TActual, Exception?>(
-            (_, e) => Task.FromResult(e?.InnerException),
-            assert,
-            nameof(WithInnerException2),
-            ""), []);
-        return new(delegateAssertionBuilder, source, e => selector(e)?.InnerException);
-    }
-
     public ThrowsException<TActual, Exception> WithInnerException()
     {
         source.AssertionBuilder.AppendExpression($"{nameof(WithInnerException)}()");

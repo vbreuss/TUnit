@@ -17,10 +17,8 @@ public partial class Throws
             Exception exception = CreateOtherException();
             Action action = () => throw exception;
 
-            await Assert.That(exception).HasMessage("foo");
-
             var sut = async ()
-                => await Assert.That(action).Throws<CustomException>().Which.HasMessage("bar").And.HasHResult(872);
+                => await Assert.That(action).Throws<CustomException>();
 
             await Assert.That(sut).ThrowsException()
                 .WithMessage(expectedMessage);

@@ -27,7 +27,7 @@ public partial class Throws
             Action action = () => throw exception;
 
             var sut = async ()
-                => await Assert.That(action).ThrowsException();
+                => await Assert.That(action).ThrowsException().WithInnerException().WithMessage(expectedInnerMessage);
 
             await Assert.That(sut).ThrowsException()
                 .WithMessage(expectedMessage);
