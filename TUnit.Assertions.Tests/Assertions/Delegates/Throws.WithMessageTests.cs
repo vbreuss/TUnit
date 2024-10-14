@@ -18,7 +18,7 @@ public partial class Throws
                                      "bar"
                                       ↑
                                   
-                                  at Assert.That(action).ThrowsExactly<CustomException>().WithMessage(message2)
+                                  at Assert.That(action).ThrowsExactly<CustomException>().Which.HasMessage(message2)
                                   """;
             Exception exception = CreateCustomException(message1);
             Action action = () => throw exception;

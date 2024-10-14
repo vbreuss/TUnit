@@ -20,9 +20,9 @@ public class ThrowsException<TActual, TException>(
         {
             return new ValueSource<TException?>(
                 new MappedInvokableAssertionBuilder<TActual, TException?>(
-                    delegateAssertionBuilder.AssertionBuilder,
+                    delegateAssertionBuilder,
                     (_, e) => e as TException,
-                    null));
+                    nameof(Which)));
         }
     }
     public ThrowsException<TActual, TException> WithMessageMatching(StringMatcher match, [CallerArgumentExpression("match")] string doNotPopulateThisValue = "")
