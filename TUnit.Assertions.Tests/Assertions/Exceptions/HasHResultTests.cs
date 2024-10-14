@@ -3,6 +3,18 @@
 public class HasHResultTests
 {
     [Test]
+    public async Task And_Or_Precedence_Test()
+    {
+        char[] sut = "CD".ToCharArray();
+
+        await Assert.That(sut)
+            .Contains('A').And
+            .Contains('B').Or
+            .Contains('C').And
+            .Contains('D');
+    }
+
+    [Test]
     public async Task Fails_For_Different_HResults()
     {
         var actual = 1001;
