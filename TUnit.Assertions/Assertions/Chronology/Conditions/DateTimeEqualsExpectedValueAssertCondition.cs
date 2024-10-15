@@ -8,10 +8,10 @@ public class DateTimeEqualsExpectedValueAssertCondition(DateTime expected) : Exp
     {
         if (_tolerance == null || _tolerance == default)
         {
-            return $"to be equal to {expected}";
+            return $"to be equal to {Format(expected)}";
         }
 
-        return $"to be equal to {expected} +-{_tolerance}";
+        return $"to be equal to {Format(expected)} +-{Format(_tolerance)}";
     }
 
     protected override AssertionResult GetResult(DateTime actualValue, DateTime expectedValue)
@@ -24,13 +24,13 @@ public class DateTimeEqualsExpectedValueAssertCondition(DateTime expected) : Exp
             return AssertionResult
                 .FailIf(
                     () => actualValue < min || actualValue > max,
-                    $"the received value {actualValue} is outside the tolerances");
+                    $"found {Format(actualValue)}");
         }
 
         return AssertionResult
             .FailIf(
                 () => actualValue != expected,
-                $"the received value {actualValue} is different");
+                $"found {Format(actualValue)}");
     }
 
     public void SetTolerance(TimeSpan tolerance)

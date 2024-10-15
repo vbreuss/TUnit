@@ -34,7 +34,6 @@ public abstract class BaseAssertCondition
     internal void SetSubject(string? subject)
         => Subject = subject;
 
-
     protected string Format(object? obj)
     {
         if (obj is null)
@@ -47,6 +46,11 @@ public abstract class BaseAssertCondition
             return $"""
                     "{obj}"
                     """;
+        }
+
+        if (obj is DateTime dt)
+        {
+            return dt.ToString("O");
         }
 
         if (obj is char)
