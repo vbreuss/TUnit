@@ -8,7 +8,7 @@ internal class HasMessageMatchingAssertCondition<TException>(StringMatcher match
     where TException : Exception?
 {
     protected override string GetExpectation()
-        => $"to throw {typeof(TException).Name.PrependAOrAn()} which message matches \"{match.ToString()?.ShowNewLines().TruncateWithEllipsis(100)}\"";
+        => $"which has Message matching \"{match.ToString()?.ShowNewLines().TruncateWithEllipsis(100)}\"";
 
     protected override Task<AssertionResult> GetResult(TException? actualValue, Exception? exception)
     {

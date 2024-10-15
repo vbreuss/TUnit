@@ -8,7 +8,7 @@ internal class HasHResultAssertCondition<TException>(int expected)
     where TException : Exception?
 {
     protected override string GetExpectation()
-        => $"to throw {typeof(TException).Name.PrependAOrAn()} which HResult equals {expected}";
+        => $"which has HResult equal to {expected}";
 
     protected override Task<AssertionResult> GetResult(TException? actualValue, Exception? exception)
     {

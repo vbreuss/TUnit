@@ -8,7 +8,7 @@ public class HasHResultTests
         var actual = 1001;
         var expected = 9876;
         var expectedMessage = """
-                              Expected exception to throw an Exception which HResult equals 9876
+                              Expected exception which has HResult equal to 9876
 
                               but found 1001
 
@@ -39,7 +39,7 @@ public class HasHResultTests
         var actual = 1001;
         var expected = 9876;
         var expectedMessage = """
-                              Expected action to throw an Exception which HResult equals 9876
+                              Expected action to throw an Exception which has HResult equal to 9876
 
                               but found 1001
 

@@ -8,7 +8,7 @@ public class HasMessageTests
         var message1 = "foo";
         var message2 = "bar";
         var expectedMessage = """
-                              Expected exception to throw an Exception which message equals "bar"
+                              Expected exception which has Message equal to "bar"
 
                               but it differs at index 0:
                                   ↓
@@ -54,7 +54,7 @@ public class HasMessageTests
     public async Task Supports_Throw_Delegates()
     {
         var expectedMessage = """
-                              Expected action to throw an Exception which message equals "bar"
+                              Expected action to throw an Exception which has Message equal to "bar"
                               
                               but it differs at index 0:
                                   ↓

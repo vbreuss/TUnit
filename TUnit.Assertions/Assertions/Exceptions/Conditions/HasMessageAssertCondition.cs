@@ -9,7 +9,7 @@ internal class HasMessageAssertCondition<TException>(string expectedMessage, Str
     where TException : Exception?
 {
     protected override string GetExpectation()
-        => $"to throw {typeof(TException).Name.PrependAOrAn()} which message equals \"{expectedMessage.ShowNewLines().TruncateWithEllipsis(100)}\"";
+        => $"which has Message equal to \"{expectedMessage.ShowNewLines().TruncateWithEllipsis(100)}\"";
 
     protected override Task<AssertionResult> GetResult(TException? actualValue, Exception? exception)
     {

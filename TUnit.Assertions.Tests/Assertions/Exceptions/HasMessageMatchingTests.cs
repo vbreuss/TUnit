@@ -34,7 +34,7 @@ public class HasMessageMatchingTests
         var message1 = "foo";
         var message2 = "bar";
         var expectedMessage = """
-                              Expected exception to throw an Exception which message matches "bar"
+                              Expected exception which has Message matching "bar"
 
                               but found "foo"
 
@@ -150,7 +150,7 @@ public class HasMessageMatchingTests
     public async Task Supports_Throw_Delegates()
     {
         var expectedMessage = """
-                              Expected action to throw an Exception which message matches "bar"
+                              Expected action to throw an Exception which has Message matching "bar"
                               
                               but found "foo"
 
