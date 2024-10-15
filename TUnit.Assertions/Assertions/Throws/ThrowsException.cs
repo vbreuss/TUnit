@@ -13,6 +13,18 @@ public class ThrowsException<TActual, TException>(
     [CallerMemberName] string callerMemberName = "")
     where TException : Exception
 {
+    public IValueSource<TException?> Which
+    {
+        get
+        {
+            return new ValueSource<TException?>(
+                new MappedInvokableAssertionBuilder<TActual, TException?>(
+                    delegateAssertionBuilder,
+                    (_, e) => e as TException,
+                    nameof(Which)));
+        }
+    }
+
     public ThrowsException<TActual, TException> WithMessageMatching(StringMatcher match, [CallerArgumentExpression("match")] string doNotPopulateThisValue = "")
     {
         source.RegisterAssertion(new ThrowsWithMessageMatchingAssertCondition<TActual, TException>(match, selector)
